@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Portal Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .reward-card {
+            transition: all 0.3s ease;
+        }
+
+        .reward-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-indigo-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Wikimedia_Brand_Guidelines_Update_2022_Wikimedia_Logo_Brandmark.png"
+                            alt="Tech icon" class="h-8 w-8 rounded-full">
+                    </div>
+                    <h1 class="text-lg font-bold">Intern Portal</h1>
+                </div>
+                <div>
+                    <button id="loginBtn"
+                        class="bg-white text-indigo-600 px-4 py-2 rounded-md font-medium text-sm hover:bg-indigo-50 transition">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <!-- Sign In Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+
+            <!-- Header with close icon -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">Welcome Back</h2>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-600 text-xl">
+                    &times; <!-- simpler than using FontAwesome if not loaded -->
+                </button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        required>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        required>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center text-sm text-gray-700">
+                        <input type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                        <span class="ml-2">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+
+            <!-- Create Account Link -->
+            <div class="mt-4 text-center text-sm">
+                <span class="text-gray-600">New to Intern Portal?</span>
+                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500 ml-1">Create account</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Profile Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <!-- Profile Card -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+                <div class="p-6">
+                    <div class="flex flex-col items-center">
+                        <img src="<%= data.user.avatar %>" alt="Avatar"
+                            class="h-24 w-24 rounded-full mb-4 border-2 border-indigo-100">
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-900">
+                                <%= data.user.name %>
+                            </h2>
+                            <p class="text-indigo-600 text-sm font-medium">
+                                <%= data.user.role %>
+                            </p>
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                <i class="fas fa-medal mr-1"></i> Level 1
+                            </span>
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                <i class="fas fa-star mr-1"></i> New
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Section -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+                <div class="p-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Your Referral Code</h3>
+                    <p class="text-gray-500 text-sm mb-4">
+                        Invite friends to join the program using your unique code
+                    </p>
+                    <div class="relative">
+                        <input id="referralCode" type="text"
+                            class="bg-gray-50 w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 font-mono"
+                            value="<%= data.user.referralCode %>" readonly />
+                        <button id="copyBtn" class="absolute right-3 top-3 text-indigo-600 hover:text-indigo-800"
+                            type="button">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">
+                        Earn rewards for every successful referral
+                    </p>
+                    <div class="mt-6">
+                        <button
+                            class="w-full text-center py-2 px-4 border border-indigo-500 rounded-md shadow-sm text-sm font-medium text-indigo-600 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Share Referral Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donation Stats -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+                <div class="p-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Total Raised</h3>
+                    <p class="text-sm text-gray-500 mb-6">Your impact this season</p>
+                    <div class="flex justify-between items-end mb-1">
+                        <p id="amountRaised" class="text-4xl font-bold text-indigo-600">$<%=
+                                data.user.amountRaised.toLocaleString() %>
+                        </p>
+                        <span class="text-sm text-gray-500">of $5,000 goal</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="progressBar" class="progress-bar bg-indigo-600 h-2.5 rounded-full"
+                            style="width: <%= progress %>%;">
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <h4 class="text-sm font-medium text-gray-900 mb-2">Recent Contributors</h4>
+                        <div class="flex -space-x-2">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/286fd444-2324-4177-a14f-ad55bc5a2b02.png"
+                                alt="Contributor profile - older male with glasses"
+                                class="w-8 h-8 rounded-full border-2 border-white">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6c545f51-d920-498b-86b3-618362e4a2bc.png"
+                                alt="Contributor profile - young female professional"
+                                class="w-8 h-8 rounded-full border-2 border-white">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a42ef83a-db8a-4502-9701-20df326e5da0.png"
+                                alt="Contributor profile - middle-aged executive"
+                                class="w-8 h-8 rounded-full border-2 border-white">
+                            <span
+                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white bg-gray-100 text-xs font-medium text-gray-600">+12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rewards Section -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-900">Your Rewards</h2>
+                    <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                        View all
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Reward 1 -->
+                    <div class="reward-card bg-white border border-gray-200 rounded-lg overflow-hidden h-full">
+                        <div
+                            class="h-32 bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                            <i class="fas fa-mug-hot text-white text-4xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-medium text-gray-900 mb-1">Coffee Chat</h3>
+                            <p class="text-sm text-gray-500 mb-3">30 minutes with a senior leader</p>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Unlocked
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Reward 2 -->
+                    <div class="reward-card bg-white border border-gray-200 rounded-lg overflow-hidden h-full">
+                        <div class="h-32 bg-gradient-to-r from-blue-500 to-teal-400 flex items-center justify-center">
+                            <i class="fas fa-handshake text-white text-4xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-medium text-gray-900 mb-1">Mentorship</h3>
+                            <p class="text-sm text-gray-500 mb-3">3 months with a mentor</p>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                $2,000 needed
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Reward 3 -->
+                    <div class="reward-card bg-white border border-gray-200 rounded-lg overflow-hidden h-full">
+                        <div class="h-32 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-4xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-medium text-gray-900 mb-1">Workshop Pass</h3>
+                            <p class="text-sm text-gray-500 mb-3">Access to all training</p>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                $4,000 needed
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Reward 4 -->
+                    <div class="reward-card bg-white border border-gray-200 rounded-lg overflow-hidden h-full">
+                        <div class="h-32 bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
+                            <i class="fas fa-trophy text-white text-4xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-medium text-gray-900 mb-1">Final Showcase</h3>
+                            <p class="text-sm text-gray-500 mb-3">Present to leadership</p>
+                            <span
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                Coming soon
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-900">Top Interns</h2>
+                    <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                        View all
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    #</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Name</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Amount</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Referrals</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Reputation</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <% data.leaderboard.forEach((person, index)=> { %>
+                                <tr class="<%= person.name === data.user.name ? 'bg-indigo-50 font-semibold' : '' %>">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <%= index + 1 %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <%= person.name %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$<%=
+                                            person.amount.toLocaleString() %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <%= person.referrals %>
+                                    </td>
+                                    <td
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        <%= person.reputation %>/5
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="flex justify-center md:order-2 space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-gray-500">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-gray-500">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-gray-500">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <div class="mt-8 md:mt-0 md:order-1">
+                    <p class="text-center text-sm text-gray-500">
+                        © 2025 Intern Portal. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Copy referral code functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const copyBtn = document.getElementById("copyBtn");
+            const referralInput = document.getElementById("referralCode");
+
+            copyBtn.addEventListener("click", function () {
+                navigator.clipboard
+                    .writeText(referralInput.value)
+                    .then(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-check-circle text-green-500"></i>';
+                        setTimeout(() => {
+                            copyBtn.innerHTML = '<i class="far fa-copy"></i>';
+                        }, 2000);
+                    })
+                    .catch((err) => {
+                        console.error("Copy failed:", err);
+                    });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginBtn = document.getElementById("loginBtn");
+            const loginModal = document.getElementById("loginModal");
+            const closeModal = document.getElementById("closeModal");
+
+            if (loginBtn) {
+                loginBtn.addEventListener("click", () => {
+                    loginModal.classList.remove("hidden");
+                });
+            }
+
+            closeModal.addEventListener("click", () => {
+                loginModal.classList.add("hidden");
+            });
+        });
+
+    </script>
+</body>
+
+</html>
